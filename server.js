@@ -95,6 +95,12 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'ui', 'index.html'));
 });
 
+var counter=0;
+app.get('/counter', function(req,res) {
+    counter=counter+1;
+    req.send(counter.toString())
+});
+
 app.get('/:articleName', function(req, res) {
     //articleName == articleOne
     //articles[articleName] == {} contents for article one 
