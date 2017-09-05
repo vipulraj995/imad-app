@@ -3,8 +3,10 @@ var morgan = require('morgan');
 var path = require('path');
 var crypto = require('crypto');
 var app = express();
+var Pool= require('pg').Pool;
+var bodyParser=require('body-parser');
 app.use(morgan('combined'));
-
+app.use(bodyParser.json());
 
 var articles= {
      article1 :{
@@ -112,6 +114,23 @@ app.get('/counter', function(req,res) {
     res.send(counter.toString());
 });
 
+app.post('/create-user',function(req,res)
+{
+    //json
+    var usename=req.body.usename;
+    var password=req.body.password;
+    
+    var salt=crypto.randomBytes.toString('hex');
+   var dbString=hash(password,salt);
+   pool.query('Insert into user1 (username,password) values ($1, $2)', [username, dbString], function(err, result) {
+      if(err) {
+          res.status(500).send(err.toString());
+      } else {
+          res.send('USER SUCCESSFULLY CREATED'+username);
+      
+      } 
+   });
+});
 app.get('/:articleName', function(req, res) {
     //articleName == articleOne
     //articles[articleName] == {} contents for article one 
