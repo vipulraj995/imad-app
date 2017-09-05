@@ -5,6 +5,7 @@ var crypto = require('crypto');
 var app = express();
 var Pool= require('pg').Pool;
 var bodyParser=require('body-parser');
+
 app.use(morgan('combined'));
 app.use(bodyParser.json());
 
@@ -117,10 +118,10 @@ app.get('/counter', function(req,res) {
 app.post('/create-user',function(req,res)
 {
     //json
-    var usename=req.body.usename;
+    var username=req.body.username;
     var password=req.body.password;
     
-    var salt=crypto.randomBytes.toString('hex');
+    var salt=crypto.randomBytes(128).toString('hex');
    var dbString=hash(password,salt);
    pool.query('Insert into user1 (username,password) values ($1, $2)', [username, dbString], function(err, result) {
       if(err) {
