@@ -19,7 +19,7 @@ button.onclick=function() {
           }
       }
   };
-  request.open('GET','http://vipulraj995.imad.hasura-app.io/submit-name?name='+name,true);
+  request.open('GET','http://vipulraj995.imad.hasura-app.io/counter',true);
 request.send(null);
   //render the variable in the coreect span
   
